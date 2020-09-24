@@ -18,7 +18,8 @@ private:
 public:
     void imprimir();
     void asignar(int n, int d);
-    void sumarRacionales(racional r1);
+    void sumarRacionales(racional r2);
+    void multiplicarRacionales(racional r2);
     void simplificar();
     int getMcd(int d, int n);
     int getNumerador();
@@ -28,10 +29,10 @@ public:
 void racional::imprimir()
 {
     if(numerador == denominador){
-        printf("%d", numerador);
+        printf("\n %d", 1);
     }
     else{
-        printf("%d/%d", numerador,denominador);
+        printf("\n %d/%d", numerador,denominador);
     }
     
 };
@@ -45,6 +46,12 @@ void racional::asignar(int n, int d)
 void racional::sumarRacionales(racional r2)
 {
     numerador = (numerador * r2.getDenominador()) + (denominador * r2.getNumerador());
+    denominador = denominador * r2.getDenominador();
+};
+
+void racional::multiplicarRacionales(racional r2)
+{
+    numerador = numerador * r2.getNumerador();
     denominador = denominador * r2.getDenominador();
 };
 
@@ -75,8 +82,10 @@ int main()
     r.asignar(1, 2);
     r2.asignar(1, 2);
     r.sumarRacionales(r2);
+    r.imprimir(); // 1 por que el resultado final es 4/4
+    r.multiplicarRacionales(r2);
+    r.imprimir(); // 4/4 * 1/2 = 4/8
     r.simplificar();
-    r.imprimir();
-    
+    r.imprimir(); // simplifar 4/8 = 1/2
 } ///:~
 
