@@ -23,9 +23,11 @@ Es recomendable aplicar un procedimiento de simplificación, durante el proceso 
 
 */
 #include <stdio.h>
-#include <iostream>  
+#include <iostream>
 #include <string>
 #include <vector>
+#include <time.h>
+#include <math.h>
 
 using namespace std;
 
@@ -33,45 +35,96 @@ struct racional
 {
 private:
     string representacion;
+
 public:
     string getRepresentacion();
-    void setRepresentacion(int,int);
-    size_t getVectorRepresentacion(vector<string>&, char const *);
+    void setRepresentacion(int, int);
+    void setRepresentacionRandom();
+    void setRepresentacionManual(int);
+    void simplificarRepresentacion();
+    int getMcd(int, int);
+    size_t getVectorRepresentacion(vector<string> &, char const *);
+    bool revisarDivisionEntera(string str);
 };
 
-string racional::getRepresentacion(){
+string racional::getRepresentacion()
+{
     return representacion;
 };
 
-void racional::setRepresentacion(int numerador, int denominador){
-    representacion = to_string(numerador)+"/"+to_string(denominador);
+void racional::setRepresentacion(int numerador, int denominador)
+{
+    representacion = to_string(numerador) + "/" + to_string(denominador);
+};
+
+void racional::setRepresentacionManual(int representacionNumerica)
+{
+    representacion = to_string(representacionNumerica);
+};
+
+void racional::setRepresentacionRandom()
+{
+    srand(time(0)); //Mi actual fecha para generar una semilla random.
+    representacion = to_string(rand()) + "/" + to_string(rand());
+};
+
+void racional::simplificarRepresentacion()
+{
+    vector<string> valoresCadena;
+    getVectorRepresentacion(valoresCadena, "/");
+    int mcd = getMcd(stoi(valoresCadena[0]), stoi(valoresCadena[1]));
+
+    if(stoi(valoresCadena[0]) == stoi(valoresCadena[1])){
+        setRepresentacionManual(1);
+    }else{
+        if (revisarDivisionEntera( to_string(  (( (float)stoi(valoresCadena[0]) / (float)mcd) / ( (float)stoi(valoresCadena[1]) / (float) mcd)) ) )){
+            setRepresentacionManual(((stoi(valoresCadena[0]) / mcd) / (stoi(valoresCadena[1]) / mcd)));
+        }else{
+            setRepresentacion(stoi(valoresCadena[0]) / mcd, stoi(valoresCadena[1]) / mcd);
+        }
+    }
+};
+
+bool racional::revisarDivisionEntera(string str)
+{
+    float numeroFlotante = (float)stof(str);
+    return (floor(numeroFlotante) == numeroFlotante) ? true : false;
+};
+
+int racional::getMcd(int numerador, int denominador)
+{
+    return (numerador == 0) ? denominador : getMcd(denominador % numerador, numerador);
 };
 
 size_t racional::getVectorRepresentacion(vector<string> &cadenas, char const *caracter)
 {
     size_t posicion = representacion.find(caracter);
-    size_t  posicionInicial = 0;
-     cadenas.clear();
-    while( posicion != string::npos ) { //posicion negativa.
-         cadenas.push_back( representacion.substr(  posicionInicial, posicion -  posicionInicial ) );
+    size_t posicionInicial = 0;
+    cadenas.clear();
+    while (posicion != string::npos)
+    { //posicion negativa.
+        cadenas.push_back(representacion.substr(posicionInicial, posicion - posicionInicial));
         posicionInicial = posicion + 1;
-        posicion = representacion.find(caracter,  posicionInicial );
+        posicion = representacion.find(caracter, posicionInicial);
     }
-    cadenas.push_back( representacion.substr(  posicionInicial, min( posicion, representacion.size() ) -  posicionInicial + 1 ) );
-    return  cadenas.size();
+    cadenas.push_back(representacion.substr(posicionInicial, min(posicion, representacion.size()) - posicionInicial + 1));
+    return cadenas.size();
 }
 
 int main()
 {
+    racional racional1, racional2;
 
-    
-    vector<string> v;
-    racional racional1;
-    
-    racional1.setRepresentacion(1,2);
-    racional1.getVectorRepresentacion(v, "/");
+    racional1.setRepresentacion(90, 9);
+    racional2.setRepresentacionRandom();
 
-    cout << racional1.getRepresentacion() << '\n';
-    cout << v[0] << '\n';
+    cout << racional1.getRepresentacion() << endl;
+    cout << racional2.getRepresentacion() << endl;
+
+    racional1.simplificarRepresentacion();
+    racional2.simplificarRepresentacion();
+
+    cout << racional1.getRepresentacion() << endl;
+    cout << racional2.getRepresentacion() << endl;
 
 }
