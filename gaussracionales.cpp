@@ -26,19 +26,20 @@ Es recomendable aplicar un procedimiento de simplificación, durante el proceso 
 
 struct racional
 {
-    private:
-        char const *representacion;
-    public:
-        char const *getRepresentacion();
-        void setRepresentacion(int,int);
-        void getRepresentacionSeparada();
-        //Utilidades...
-        void enteroaCadena(int,char*);
-        void cadenaaEntero(int*); //no construido
-        void concatenarCadenas(char[],char[]);
-        int tamanoCadena(char*);
-        int tamanoCadenaConstante(char const*);
-        void compararCadenas(char, char const *);
+private:
+    char const *representacion;
+
+public:
+    char const *getRepresentacion();
+    void setRepresentacion(int, int);
+    void getRepresentacionSeparada();
+    //Utilidades...
+    void enteroaCadena(int, char *);
+    void cadenaaEntero(int *); //no construido
+    void concatenarCadenas(char[], char[]);
+    int tamanoCadena(char *);
+    int tamanoCadenaConstante(char const *);
+    void compararCadenas(char, char const *);
 };
 
 char const *racional::getRepresentacion()
@@ -46,34 +47,40 @@ char const *racional::getRepresentacion()
     return representacion;
 };
 
-void racional::compararCadenas(char  cadena1, char const *cadena2){
+void racional::compararCadenas(char cadena1, char const *cadena2)
+{
     //printf(cadena1);
-    if(cadena1 == cadena2[0]){
+    if (cadena1 == cadena2[0])
+    {
         printf("iguales \n");
-    }else{
+    }
+    else
+    {
         printf("no iguales \n");
     }
 };
 
-void racional::getRepresentacionSeparada(){
-    
+void racional::getRepresentacionSeparada()
+{
+
     int tamanoRepresentacion = tamanoCadenaConstante(representacion);
-    
-    printf("tamaño: %d \n",tamanoRepresentacion);
+
+    printf("tamaño: %d \n", tamanoRepresentacion);
+
+    char caracter_obtenido = representacion[tamanoRepresentacion - 3];
+    char const *separador = "/";
+    compararCadenas(caracter_obtenido, separador);
+
+    printf("valor a comparar: %c \n", caracter_obtenido);
 
     //for(int i = 0; i < tamanoRepresentacion; i++){
 
-        /*if(representacion[2] == "/"){
+    /*if(representacion[2] == "/"){
             printf("loencontre");0
         } */
-        char lol = representacion[tamanoRepresentacion-1];
-        char const *lol2 = "2";
-        compararCadenas(lol, lol2);
 
-        printf("posicion2: %c \n", lol);
     //}
 };
-
 
 void racional::setRepresentacion(int numerador, int denominador)
 {
@@ -86,31 +93,35 @@ void racional::setRepresentacion(int numerador, int denominador)
     enteroaCadena(denominador, denominadorCadena);
 
     //Concatenamos todo a numeradorCadena :) para convertirlo en la representacion char...
-    concatenarCadenas(numeradorCadena, separador); 
+    concatenarCadenas(numeradorCadena, separador);
     concatenarCadenas(numeradorCadena, denominadorCadena);
 
     representacion = numeradorCadena;
-    printf("representacion:%s \n",representacion);
-
+    printf("representacion:%s \n", representacion);
 };
 
-int racional::tamanoCadena(char *cadena){
+int racional::tamanoCadena(char *cadena)
+{
     int contador = 0;
-    for (int i = 0; cadena[i] != '\0'; ++i){
+    for (int i = 0; cadena[i] != '\0'; ++i)
+    {
         contador = contador + 1;
     }
     return contador;
 };
 
-int racional::tamanoCadenaConstante(char const *cadena){
+int racional::tamanoCadenaConstante(char const *cadena)
+{
     int contador = 0;
-    for (int i = 0; cadena[i] != '\0'; ++i){
+    for (int i = 0; cadena[i] != '\0'; ++i)
+    {
         contador = contador + 1;
     }
     return contador;
 };
 
-void racional::concatenarCadenas(char cadena1[], char cadena2[]){
+void racional::concatenarCadenas(char cadena1[], char cadena2[])
+{
     int tamanoCadena1, contadorContenido;
     tamanoCadena1 = tamanoCadena(cadena1);
     for (contadorContenido = 0; cadena2[contadorContenido] != '\0'; tamanoCadena1++, contadorContenido++)
@@ -147,7 +158,6 @@ void racional::enteroaCadena(int entero, char *posicionCadena)
         posicionCadena[1] = '\0';
     }
 };
-
 
 int main()
 {
