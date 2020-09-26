@@ -113,6 +113,8 @@ size_t racional::getVectorRepresentacion(vector<string> &cadenas, char const *ca
 int main()
 {
     //Programa principal
+    cout << "====== ZONA PRINCIPAL ========" << endl;
+
     vector<racional> vectorRacionales;
 
     racional r1,r2,r3,r4,r5,r6;
@@ -131,12 +133,20 @@ int main()
     vectorRacionales.push_back(r5);
     vectorRacionales.push_back(r6);
 
+    cout << vectorRacionales[0].getRepresentacion() << endl;
+    cout << vectorRacionales[1].getRepresentacion() << endl;
+    cout << vectorRacionales[2].getRepresentacion() << endl;
+    cout << vectorRacionales[3].getRepresentacion() << endl;
+    cout << vectorRacionales[4].getRepresentacion() << endl;
+    cout << vectorRacionales[5].getRepresentacion() << endl;
+
     //Tests...
+    cout << "====== ZONA DE TESTEOS ========" << endl;
     racional racional1, racional2;
 
     racional1.setRepresentacion(90, 9);
     racional2.setRepresentacionRandom();
-
+    
     cout << racional1.getRepresentacion() << endl;
     cout << racional2.getRepresentacion() << endl;
 
