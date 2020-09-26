@@ -44,7 +44,7 @@ public:
     void simplificarRepresentacion();
     int getMcd(int, int);
     size_t getVectorRepresentacion(vector<string> &, char const *);
-    bool revisarDivisionEntera(string str);
+    bool divisionDaEntero(string str);
 };
 
 string racional::getRepresentacion()
@@ -77,7 +77,7 @@ void racional::simplificarRepresentacion()
     if(stoi(valoresCadena[0]) == stoi(valoresCadena[1])){
         setRepresentacionManual(1);
     }else{
-        if (revisarDivisionEntera( to_string(  (( (float)stoi(valoresCadena[0]) / (float)mcd) / ( (float)stoi(valoresCadena[1]) / (float) mcd)) ) )){
+        if (divisionDaEntero( to_string(  (( (float)stoi(valoresCadena[0]) / (float)mcd) / ( (float)stoi(valoresCadena[1]) / (float) mcd)) ) )){
             setRepresentacionManual(((stoi(valoresCadena[0]) / mcd) / (stoi(valoresCadena[1]) / mcd)));
         }else{
             setRepresentacion(stoi(valoresCadena[0]) / mcd, stoi(valoresCadena[1]) / mcd);
@@ -85,10 +85,9 @@ void racional::simplificarRepresentacion()
     }
 };
 
-bool racional::revisarDivisionEntera(string str)
+bool racional::divisionDaEntero(string str)
 {
-    float numeroFlotante = (float)stof(str);
-    return (floor(numeroFlotante) == numeroFlotante) ? true : false;
+    return (floor((float)stof(str)) == (float)stof(str)) ? true : false;
 };
 
 int racional::getMcd(int numerador, int denominador)
@@ -113,6 +112,26 @@ size_t racional::getVectorRepresentacion(vector<string> &cadenas, char const *ca
 
 int main()
 {
+    //Programa principal
+    vector<racional> vectorRacionales;
+
+    racional r1,r2,r3,r4,r5,r6;
+
+    r1.setRepresentacionRandom();
+    r2.setRepresentacionRandom();
+    r3.setRepresentacionRandom();
+    r4.setRepresentacionManual(1);
+    r5.setRepresentacionManual(0);
+    r6.setRepresentacionManual(0);
+
+    vectorRacionales.push_back(r1);
+    vectorRacionales.push_back(r2);
+    vectorRacionales.push_back(r3);
+    vectorRacionales.push_back(r4);
+    vectorRacionales.push_back(r5);
+    vectorRacionales.push_back(r6);
+
+    //Tests...
     racional racional1, racional2;
 
     racional1.setRepresentacion(90, 9);
